@@ -1,0 +1,37 @@
+
+.mario{
+    position: relative;
+    transform: translate(-50%);
+    width: 4rem;
+    height: 6rem;
+    background-image: url(./idle.png);
+    background-repeat:no-repeat;
+    background-size:contain;
+    transform-origin: 0;
+}
+
+.run{
+    animation: walk 0.18s;
+    animation-iteration-count: infinite;
+}
+
+.right{
+    transform: scaleX(-1);
+}
+
+.jump{
+    background-image: url(./left/jumpstate1.png);
+}
+
+.fall{
+    background-image: url(./left/jumpstate2.png);
+}
+
+@keyframes walk {
+    from{
+        background-image: url(./left/runstate1.png);
+    }
+    to{
+        background-image: url(./left/runstate2.png);
+    }
+}
