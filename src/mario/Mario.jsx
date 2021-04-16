@@ -54,7 +54,7 @@ export const Mario = (props) =>{
         console.log("showd")
         if(props.direction==="ArrowLeft"){
             if(props.jump){
-                setLeft(left-1);
+                setLeft(left-0.5);
 
             }
             else{
@@ -64,7 +64,7 @@ export const Mario = (props) =>{
         }
         else{
             if(props.jump){
-                setLeft(left+1);
+                setLeft(left+0.5);
 
             }
             else{
@@ -72,7 +72,7 @@ export const Mario = (props) =>{
 
             }
         }
-        requestRef.current = requestAnimationFrame(moveToDirection);
+       // requestRef.current = requestAnimationFrame(moveToDirection);
     }
 
     const getMarioLook = (direction) =>{
@@ -115,7 +115,7 @@ export const Mario = (props) =>{
                         setTop(top-1.5);
                     }
                     else{
-                        setTop(top+0.7)
+                        setTop(top+1)
                     }
                     if(!jumpRef.current){
                         jumpRef.current = setTimeout(()=>{
@@ -138,7 +138,7 @@ export const Mario = (props) =>{
                         return
                     }
                 }
-                setTop(top+0.7)
+                setTop(top+1)
             }
         }
         else{
