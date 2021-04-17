@@ -1,16 +1,116 @@
 .App {
   text-align: center;
-  background-color: gray;
+  background-color: #04afde;
   width: 100%;
   height: 100vh;
   position: relative;
+  padding:0;
+  overflow: hidden;
 }
 
-.world{
+
+.coin{
+  background-image: url(./coin.png);
+  width:2rem;
+  height: 2rem;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.world1{
   background-image: url(./world1.png);
-  width: 100%;
-  height: 25vh;
+  width: 15rem;
+  height: 10rem;
   position: absolute;
-  bottom: 0;
+  bottom: 0vh;
   background-color: green;
+}
+
+.world2{
+  background-image: url(./world1.png);
+  width: 100rem;
+  height: 10rem;
+  position: absolute;
+  bottom: 0vh;
+  left: 30rem;
+  background-color: green;
+}
+
+.world3{
+  background-image: url(./world1.png);
+  width: 20rem;
+  height: 10rem;
+  position: absolute;
+  bottom: 10rem;
+  right: 10rem;
+  background-color: green;
+}
+
+.ground{
+  background-image: url(ground.png);
+  background-repeat: repeat;
+  border-left: thin black solid;
+  border-right: thin black solid;
+}
+
+.grass{
+  background-image: url(grass.png);
+  background-repeat: repeat-x;
+  height: auto;
+  border: thin black solid;
+  border-bottom: none;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.grass1{
+  width: 15rem;
+  height: 0.44rem;
+  position: absolute;
+  bottom: 10rem;
+}
+
+.grass2{
+  width: 100rem;
+  height: 0.44rem;
+  position: absolute;
+  bottom: 10rem;
+  left: 30rem;
+}
+
+.grass3{
+  width: 20rem;
+  height: 0.44rem;
+  position: absolute;
+  bottom: 20rem;
+  right: 10rem;
+  background-color: green;
+}
+
+
+canvas{
+  width: 100vw;
+  height: 100vh;
+}
+
+.death-trigger{
+  width:100vw;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2rem;
+}
+
+.firstcoin{
+  position: absolute;
+  top: 50%;
+  left: 70%;
+  transform: translate(-50%);
+}
+
+.secondcoin{
+  position: absolute;
+  top: 70%;
+  left:10%;
+  transform: translate(-50%);
 }
