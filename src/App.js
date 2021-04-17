@@ -9,22 +9,39 @@ function App() {
   let [jump,setJump] = useState(false)
   let [direction,setDirection] = useState(null)
   let [ground,setGround] = useState(null)
-  let [falling,setFalling] = useState(false);
+  let [falling,setFalling] = useState(true);
+
+  let [delta,setDelta] = useState(0);
 
   let fallRef = useRef(null);
   let directionRef = useRef(null);
+  let lastTick = useRef(0)
+
+  let requestRef = useRef(null);
+
+  let deltaRef = useRef(null)
+  function tick(timestamp) {
+      let delta = (timestamp - lastTick.current) / (1000 / 60);
+      lastTick.current = timestamp
+      requestRef.current = requestAnimationFrame(tick)
+      setDelta(delta)
+    }
 
   let downRef = useRef(null);
   useEffect(() => {
-    downRef.current = document.addEventListener("keydown", handleKeyDown);
+    requestAnimationFrame(tick)
+    document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("keyup", handleKeyUp);
     let temp = document.querySelectorAll(".ground")
     let temp1=[]
     for(var i=0;i<temp.length;i++){
       temp1.push(temp[i].getBoundingClientRect())
     }
-    setGround(temp)
+    console.log(temp1)
+    setGround(temp1)
     return () => {
+      document.removeEventListener("keydown",handleKeyDown);
+      document.removeEventListener("keyup",handleKeyUp)
     }
   },[])
 
@@ -48,6 +65,7 @@ function App() {
     }
   }
   const handleKeyUp = (e) =>{
+    if (e.repeat) { return }
     switch(e.code){
       case "ArrowLeft":
       case "ArrowRight":{
@@ -73,7 +91,7 @@ function App() {
 
   return (
     <div className="App">
-        <Mario direction={direction} falling={falling} startFall={startFall} endFall={endFall} jumpEnd={jumpEnd} jump={jump} colliders={ground}></Mario>
+        <Mario direction={direction} delta={delta} falling={falling} startFall={startFall} endFall={endFall} jumpEnd={jumpEnd} jump={jump} colliders={ground}></Mario>
         <div className="world ground"></div>
     </div>
   );
