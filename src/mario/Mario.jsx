@@ -1,12 +1,11 @@
 import React, { useEffect,useState,useRef } from 'react'
 import "./Mario.css"
+import gsap from 'gsap/all'
 
 export const Mario = (props) =>{
     let mario = useRef();
 
     const [runState,setRunState] = useState(0);
-    let requestRef = useRef(null);
-    let directionRef = useRef(null);
     let jumpRef = useRef(null);
     const [top,setTop] = useState(-50);
     const [left,setLeft] = useState(-50);
@@ -26,8 +25,6 @@ export const Mario = (props) =>{
             }
         }
       return () => {
-        cancelAnimationFrame(directionRef.current);
-        cancelAnimationFrame(requestRef.current);
       }
     },[props.delta])
 
@@ -123,7 +120,6 @@ export const Mario = (props) =>{
                             let temp = props.colliders[i]
                             if(temp.top < marioRect.bottom && temp.left <= marioRect.left + (marioRect.width/2) && temp.right + (marioRect.width/2)> marioRect.right && marioRect.top < temp.top){
                                 if(!props.jump){
-                                    //setTop(temp.height-marioRect.height + 7)
                                     props.endFall();
                                     props.jumpEnd()
                                 }
@@ -133,16 +129,19 @@ export const Mario = (props) =>{
                         setTop(top+(12*props.delta))
                     }
                     else{
-                        let marioRect = mario.current?mario.current.getBoundingClientRect():null;
-                        var flag=0;
-                        for(var i=0;i<props.colliders.length;i++){
-                            let temp = props.colliders[i]
-                            if(temp.top < marioRect.bottom && temp.left <= marioRect.left + (marioRect.width/2) && temp.right + (marioRect.width/2)> marioRect.right && marioRect.top < temp.top){
-                                flag=1
+                        if(props.direction){
+                            let marioRect = mario.current?mario.current.getBoundingClientRect():null;
+                            var flag=0;
+                            for(var i=0;i<props.colliders.length;i++){
+                                let temp = props.colliders[i]
+                                if(temp.top < marioRect.bottom && temp.left <= marioRect.left + (marioRect.width/2) && temp.right + (marioRect.width/2)> marioRect.right && marioRect.top < temp.top){
+                                    flag=1
+                                }
                             }
-                        }
-                        if(flag===0){
-                            props.startFall();
+                            if(flag===0){
+                                props.startFall();
+                            }
+
                         }
 
                     }
@@ -152,7 +151,6 @@ export const Mario = (props) =>{
             }
 
         }
-        //requestRef.current = requestAnimationFrame(setGravity);
     }
 
     const setCss = () =>{

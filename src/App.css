@@ -63,6 +63,26 @@
   border-top-right-radius: 1rem;
 }
 
+.firstcoin{
+  position: absolute;
+  bottom: 11rem;
+  left: 5rem;
+}
+
+.secondcoin{
+  position: absolute;
+  bottom: 21rem;
+  right: 19rem;
+}
+
+.thirdcoin{
+  position: absolute;
+  bottom: 11rem;
+  right: 35rem;
+}
+
+
+
 .grass1{
   width: 15rem;
   height: 0.44rem;
@@ -99,18 +119,4 @@ canvas{
   left: 0;
   bottom: 0;
   height: 2rem;
-}
-
-.firstcoin{
-  position: absolute;
-  top: 50%;
-  left: 70%;
-  transform: translate(-50%);
-}
-
-.secondcoin{
-  position: absolute;
-  top: 70%;
-  left:10%;
-  transform: translate(-50%);
 }

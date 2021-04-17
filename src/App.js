@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React,{useEffect,useRef,useState} from 'react'
 import { Mario } from './mario/Mario';
+import { Coin } from './coin/Coin';
 
 function App() {
 
@@ -17,6 +18,8 @@ function App() {
   let directionRef = useRef(null);
   let lastTick = useRef(0)
 
+
+  const [collectedCoins,setCollectedCoins] = useState({});
   let [dead,setDead] = useState(false);
 
   let requestRef = useRef(null);
@@ -38,15 +41,18 @@ function App() {
   }
 
   const checkDeath = () =>{
+      if(marioRef.current && deathRef.current){
+        let temp = marioRef.current.getBoundingClientRect();
+        let temp1 = deathRef.current.getBoundingClientRect();
+        if(temp1.top < temp.top){
+          setDead(true);
+        }
 
-      let temp = marioRef.current.getBoundingClientRect();
-      let temp1 = deathRef.current.getBoundingClientRect();
-      if(temp1.top < temp.top){
-        setDead(true);
       }
   }
 
   const setAlive = () =>{
+    setCollectedCoins({})
     setDead(false);
   }
 
@@ -68,7 +74,7 @@ function App() {
 
 
   const calculateGround = () =>{
-    let temp = document.querySelectorAll(".ground")
+    let temp = document.querySelectorAll(".grass")
     let temp1=[]
     for(var i=0;i<temp.length;i++){
       temp1.push(temp[i].getBoundingClientRect())
@@ -110,6 +116,14 @@ function App() {
     }
   }
 
+  const setCoinNumber = (num) =>{
+    let temp = {...collectedCoins};
+    temp[`${num}`] = true;
+    coinSoundRef.current.currentTime = 0;
+    coinSoundRef.current.play();
+    setCollectedCoins(temp)
+  }
+
   const jumpEnd = () =>{
     setJump(false);
   }
@@ -133,8 +147,24 @@ function App() {
         <div className="grass grass1"></div>
         <div className="grass grass2"></div>
         <div className="grass grass3"></div>
-        <div className="coin firstcoin"></div>
-        <div className="coin secondcoin"></div>
+        {
+          !collectedCoins['1']&&
+          <div className="firstcoin">
+            <Coin number={1} setCoinNumber={setCoinNumber} delta={delta} direction={direction} jump={jump} falling={falling}></Coin>
+          </div>
+        }
+        {
+          !collectedCoins['2']&&
+          <div className="secondcoin">
+            <Coin number={2} setCoinNumber={setCoinNumber} delta={delta} direction={direction} jump={jump} falling={falling}></Coin>
+          </div>
+        }
+        {
+          !collectedCoins['3']&&
+          <div className="thirdcoin">
+            <Coin number={3} setCoinNumber={setCoinNumber} delta={delta} direction={direction} jump={jump} falling={falling}></Coin>
+          </div>
+        }
         <audio ref={coinSoundRef} src="https://www.myinstants.com/media/sounds/mario-coin-sound-effect.mp3" style={{display:"none"}}>
         </audio>
         <audio style={{display:"none"}}  src="http://soundfxcenter.com/video-games/super-mario-world/8d82b5_SMW_Spring_Jump_Sound_Effect.mp3"  ref={jumpSoundRef}  controls>
